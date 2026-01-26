@@ -24,18 +24,14 @@ Component datasheets are in the `components/` folder.
 
 ## Pinout
 
-| Pin | Function | PCB Design | Reality (reworked) |
-|-----|----------|------------|-------------------|
-| GPIO1 | Probe 1 (SIG1) | - | Yes (jumper wire) |
-| GPIO3 | Probe 2 (SIG2) | - | Yes (jumper wire) |
-| GPIO4 | Probe 1 (SIG1) | Yes | - |
-| GPIO5 | Probe 2 (SIG2) | Yes | - |
-| GPIO8 | Reset button | Yes | Yes |
-| GPIO9 | Boot button | Yes | Yes |
-| GPIO18 | USB D- | Yes | Yes |
-| GPIO19 | USB D+ | Yes | Yes |
-
-> **Warning:** The current PCB routes signals to GPIO4/GPIO5. GPIO5 is on ADC2, which is unavailable when WiFi is active. You must rework the board to route SIG1 to GPIO1 and SIG2 to GPIO3 (or other ADC1 pins).
+| Pin | Function |
+|-----|----------|
+| GPIO1 | Probe 1 (SIG1) |
+| GPIO3 | Probe 2 (SIG2) |
+| GPIO8 | Reset button |
+| GPIO9 | Boot button |
+| GPIO18 | USB D- |
+| GPIO19 | USB D+ |
 
 ## Wiring
 
@@ -82,7 +78,7 @@ esphome/
 
 ### Probe Pin Configuration
 
-The example config uses GPIO1 and GPIO3 (for reworked board). If you fix the PCB design, update the `probe_pin` values in your config.
+The example config uses GPIO1 and GPIO3. Adjust `probe_pin` values if using different pins.
 
 ## Calibration
 
@@ -100,8 +96,6 @@ Current calibration is tuned for:
 
 ## PCB
 
-- Project file: `ProPrj_esp32_pressure_sensor_2026-01-10.epro` (EasyEDA format)
+- Project file: `ProPrj_esp32_pressure_sensor_2026-01-26.epro` (EasyEDA format)
 - Open in EasyEDA to view schematic, PCB layout, generate Gerbers
 - Can order directly through JLCPCB from EasyEDA
-
-> **Known issue:** Fix ADC pin routing before ordering (GPIO4/5 → GPIO1/3), or plan for manual rework after assembly.
