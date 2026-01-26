@@ -89,10 +89,27 @@ Current calibration is tuned for:
 - 24V sensor input voltage
 - 20kΩ/10kΩ voltage divider
 
-**Recalibrate if any of these differ.** To calibrate:
-1. Apply known pressures (or use a reference gauge)
-2. Record the ADC voltage readings at each pressure point
-3. Update the `table[][2]` array in `pressure_probe.yaml`
+**Recalibrate if any of these differ.**
+
+### Equipment
+
+A manual hydrostatic pressure tester works well for calibration. The [IRONWALLS Hydrostatic Pressure Tester](https://www.amazon.com/dp/B07PX261P6) (5 MPa / 725 PSI range) uses G1/4 threads, so it connects directly to the sensor without adapters.
+
+### Calibration Steps
+
+1. Connect the pressure sensor to the tester
+2. Power up the ESP32 and open ESPHome logs to see voltage readings
+3. Apply pressure at several points (e.g., 0, 10, 20, 30... 100 PSI)
+4. At each point, record the "Raw Voltage" reading from the logs
+5. Update the `table[][2]` array in `pressure_probe.yaml`:
+   ```c
+   static const float table[][2] = {
+     {0.000, 0.0},    // {voltage, psi}
+     {0.094, 10.0},
+     // ... add your measured values
+   };
+   ```
+6. Flash the updated config and verify readings match the gauge
 
 ## PCB
 
