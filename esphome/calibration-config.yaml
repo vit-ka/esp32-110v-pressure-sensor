@@ -37,11 +37,3 @@ sensor:
     attenuation: 12db
     unit_of_measurement: "V"
     accuracy_decimals: 3
-
-  - platform: adc
-    pin: GPIO3
-    name: "Debug Raw GPIO3"
-    update_interval: 1s
-    attenuation: 12db
-    unit_of_measurement: "V"
-    accuracy_decimals: 3
