@@ -76,9 +76,9 @@ esphome/
 5. Fill in all values in `secrets.yaml`:
    - `wifi_ssid` - Your WiFi network name
    - `wifi_password` - Your WiFi password
-   - `api_encryption_key` - Generated key from step 4
-   - `ota_password` - Password for over-the-air updates
-   - `ap_password` - Password for fallback hotspot
+   - `pressure_probe_encryption_key` - Generated key from step 4
+   - `pressure_probe_ota_password` - Password for over-the-air updates
+   - `pressure_probe_wifi_ap_password` - Password for fallback hotspot
 
 ### Probe Pin Configuration
 
