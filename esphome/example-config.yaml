@@ -1,0 +1,40 @@
+esphome:
+  name: "water-pressure-01"
+  friendly_name: "Water Pressure 01"
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  ap:
+    ssid: "Water-Pressure-01-Fallback"
+    password: !secret ap_password
+
+captive_portal:
+
+packages:
+  probe1: !include
+    file: templates/pressure_probe.yaml
+    vars:
+      probe_id: "1"
+      probe_pin: GPIO1
+  probe2: !include
+    file: templates/pressure_probe.yaml
+    vars:
+      probe_id: "2"
+      probe_pin: GPIO3
