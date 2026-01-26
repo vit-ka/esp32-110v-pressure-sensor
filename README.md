@@ -58,6 +58,7 @@ Configuration files are in the `esphome/` folder:
 ```
 esphome/
   example-config.yaml        # Copy and customize for your device
+  calibration-config.yaml    # Raw voltage output for calibration
   templates/
     pressure_probe.yaml      # Probe template (use as-is)
   secrets.yaml.example       # Template showing required secrets
@@ -97,11 +98,12 @@ A manual hydrostatic pressure tester works well for calibration. The [IRONWALLS 
 
 ### Calibration Steps
 
-1. Connect the pressure sensor to the tester
-2. Power up the ESP32 and open ESPHome logs to see voltage readings
-3. Apply pressure at several points (e.g., 0, 10, 20, 30... 100 PSI)
-4. At each point, record the "Raw Voltage" reading from the logs
-5. Update the `table[][2]` array in `pressure_probe.yaml`:
+1. Flash `calibration-config.yaml` to get raw voltage readings every 1 second
+2. Connect the pressure sensor to the tester
+3. Open ESPHome logs to see voltage readings
+4. Apply pressure at several points (e.g., 0, 10, 20, 30... 100 PSI)
+5. At each point, record the voltage reading from the logs
+6. Update the `table[][2]` array in `pressure_probe.yaml`:
    ```c
    static const float table[][2] = {
      {0.000, 0.0},    // {voltage, psi}
@@ -109,7 +111,7 @@ A manual hydrostatic pressure tester works well for calibration. The [IRONWALLS 
      // ... add your measured values
    };
    ```
-6. Flash the updated config and verify readings match the gauge
+7. Flash the normal config (`example-config.yaml`) and verify readings match the gauge
 
 ## PCB
 
