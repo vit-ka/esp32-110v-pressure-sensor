@@ -3,44 +3,14 @@ sensor:
     pin: ${probe_pin}
     name: "Raw Voltage ${probe_id}"
     id: pressure_voltage_${probe_id}
-    update_interval: 60s
+    update_interval: 1s
     attenuation: 12db
     unit_of_measurement: "V"
     accuracy_decimals: 3
     filters:
-      - lambda: |-
-          static const int WINDOW_SIZE = 8;
-          static float buf[WINDOW_SIZE];
-          static int idx = 0, cnt = 0;
-          const float THRESH = 0.15;
-
-          ESP_LOGD("pressure_${probe_id}", "ADC raw input: %.3f V", x);
-
-          buf[idx] = x;
-          idx = (idx + 1) % WINDOW_SIZE;
-          if (cnt < WINDOW_SIZE) cnt++;
-
-          float sum = 0;
-          for (int i = 0; i < cnt; i++) sum += buf[i];
-          float avg = sum / cnt;
-
-          float voltage;
-          if (cnt < WINDOW_SIZE) {
-            voltage = x;
-            ESP_LOGD("pressure_${probe_id}", "Still filling buffer");
-          } else if (fabs(x - avg) <= THRESH) {
-            voltage = avg;
-            ESP_LOGD("pressure_${probe_id}", "Value inside the corridor. Averaging...");
-          } else {
-            voltage = x;
-            buf[0] = x;
-            cnt = 1;
-            idx = 1;
-            ESP_LOGD("pressure_${probe_id}", "Voltage spike/drop > %.3f V (%.3f). Resetting ring buffer", THRESH, fabs(x - avg));
-          }
-
-          ESP_LOGD("pressure_${probe_id}", "Filtered voltage: %.3f V (avg=%.3f V)", voltage, avg);
-          return voltage;
+      - sliding_window_moving_average:
+          window_size: 60
+          send_every: 60
 
   - platform: template
     name: "PSI ${probe_id}"
