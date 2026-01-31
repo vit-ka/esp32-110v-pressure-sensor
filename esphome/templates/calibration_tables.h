@@ -7,8 +7,8 @@ struct CalibrationTable {
   int size;
 };
 
-// 12_36v
-static const float cal_12_36v[][2] = {
+// 0-0.8MPa probe 
+static const float cal_0_08Mpa[][2] = {
   {0.000f,  0.0f},
   {0.110f, 10.0f},
   {0.250f, 20.0f},
@@ -22,8 +22,8 @@ static const float cal_12_36v[][2] = {
   {1.450f, 99.9f}
 };
 
-// 5_16v
-static const float cal_5_16v[][2] = {
+// O-1.0MPa probe
+static const float cal_0_10MPa[][2] = {
   {0.000f,  0.0f},
   {0.120f, 10.0f},
   {0.220f, 20.0f},
@@ -38,8 +38,8 @@ static const float cal_5_16v[][2] = {
 };
 
 static const CalibrationTable CALIBRATION_TABLES[] = {
-  {"12_36v",  cal_12_36v,  sizeof(cal_12_36v)  / sizeof(cal_12_36v[0])},
-  {"5_16v", cal_5_16v, sizeof(cal_5_16v) / sizeof(cal_5_16v[0])},
+  {"0-0.8MPa",  cal_0_08Mpa,  sizeof(cal_0_08Mpa)  / sizeof(cal_0_08Mpa[0])},
+  {"0-1.0MPa", cal_0_10MPa, sizeof(cal_0_10MPa) / sizeof(cal_0_10MPa[0])},
 };
 
 static const int CALIBRATION_TABLE_COUNT = sizeof(CALIBRATION_TABLES) / sizeof(CALIBRATION_TABLES[0]);

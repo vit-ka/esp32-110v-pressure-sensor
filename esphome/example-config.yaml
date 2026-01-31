@@ -36,10 +36,10 @@ packages:
     vars:
       probe_id: "1"
       probe_pin: GPIO1
-      calibration_id: "12_36v"
+      calibration_id: "0-0.8MPa"
   probe2: !include
     file: templates/pressure_probe.yaml
     vars:
       probe_id: "2"
       probe_pin: GPIO3
-      calibration_id: "12_36v"
+      calibration_id: "0-0.8MPa"

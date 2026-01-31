@@ -37,4 +37,4 @@ packages:
     vars:
       probe_id: "1"
       probe_pin: GPIO1
-      calibration_id: "12_36v"
+      calibration_id: "0-0.8MPa"
