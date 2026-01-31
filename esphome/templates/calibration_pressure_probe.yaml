@@ -7,58 +7,45 @@ sensor:
     attenuation: 12db
     unit_of_measurement: "V"
     accuracy_decimals: 3
+    on_value:
+      then:
+        - lambda: |-
+            float raw = x;
 
-  - platform: template
-    name: "Cal Avg Voltage ${probe_id}"
-    id: cal_avg_voltage_${probe_id}
-    unit_of_measurement: "V"
-    accuracy_decimals: 3
-    update_interval: 1s
-    lambda: |-
-      static float buf[10];
-      static int idx = 0, cnt = 0;
+            // Moving average (10-sample window)
+            static float buf[10];
+            static int idx = 0, cnt = 0;
+            buf[idx] = raw;
+            idx = (idx + 1) % 10;
+            if (cnt < 10) cnt++;
+            float sum = 0;
+            for (int i = 0; i < cnt; i++) sum += buf[i];
+            float avg = sum / cnt;
 
-      float v = id(cal_voltage_${probe_id}).state;
-      if (isnan(v)) return NAN;
+            // PSI interpolation
+            auto* cal = find_calibration("${calibration_id}");
+            if (!cal) {
+              ESP_LOGE("cal_${probe_id}", "Unknown calibration table: ${calibration_id}");
+              return;
+            }
 
-      buf[idx] = v;
-      idx = (idx + 1) % 10;
-      if (cnt < 10) cnt++;
+            const float (*table)[2] = cal->points;
+            const int TABLE_SIZE = cal->size;
+            float psi = 0.0;
 
-      float sum = 0;
-      for (int i = 0; i < cnt; i++) sum += buf[i];
-      return sum / cnt;
+            if (raw < table[0][0]) {
+              psi = 0.0;
+            } else if (raw > table[TABLE_SIZE - 1][0]) {
+              psi = table[TABLE_SIZE - 1][1];
+            } else {
+              for (int i = 0; i < TABLE_SIZE - 1; i++) {
+                float x0 = table[i][0], x1 = table[i+1][0];
+                if (raw >= x0 && raw <= x1) {
+                  float y0 = table[i][1], y1 = table[i+1][1];
+                  psi = y0 + (raw - x0) * (y1 - y0) / (x1 - x0);
+                  break;
+                }
+              }
+            }
 
-  - platform: template
-    name: "Cal PSI ${probe_id}"
-    id: cal_psi_${probe_id}
-    unit_of_measurement: "psi"
-    accuracy_decimals: 1
-    update_interval: 1s
-    device_class: pressure
-    state_class: measurement
-    lambda: |-
-      float voltage = id(cal_voltage_${probe_id}).state;
-      if (isnan(voltage)) return NAN;
-
-      auto* cal = find_calibration("${calibration_id}");
-      if (!cal) {
-        ESP_LOGE("cal_${probe_id}", "Unknown calibration table: ${calibration_id}");
-        return NAN;
-      }
-
-      const float (*table)[2] = cal->points;
-      const int TABLE_SIZE = cal->size;
-
-      if (voltage < table[0][0]) return 0.0;
-      if (voltage > table[TABLE_SIZE - 1][0]) return table[TABLE_SIZE - 1][1];
-
-      for (int i = 0; i < TABLE_SIZE - 1; i++) {
-        float x0 = table[i][0], x1 = table[i+1][0];
-        if (voltage >= x0 && voltage <= x1) {
-          float y0 = table[i][1], y1 = table[i+1][1];
-          return y0 + (voltage - x0) * (y1 - y0) / (x1 - x0);
-        }
-      }
-
-      return 0.0;
+            ESP_LOGI("cal", "${probe_pin}  Raw: %5.3f V  Avg: %5.3f V  PSI: %5.1f", raw, avg, psi);
