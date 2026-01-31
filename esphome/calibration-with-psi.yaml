@@ -10,6 +10,8 @@ esp32:
     type: esp-idf
 
 logger:
+  logs:
+    sensor: WARN
 
 api:
   encryption:
