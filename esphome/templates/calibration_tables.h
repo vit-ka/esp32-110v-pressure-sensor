@@ -7,7 +7,7 @@ struct CalibrationTable {
   int size;
 };
 
-// first_batch (previously "Mine")
+// first_batch
 static const float cal_first_batch[][2] = {
   {0.000f,  0.0f},
   {0.086f, 10.0f},
@@ -22,7 +22,7 @@ static const float cal_first_batch[][2] = {
   {1.612f, 99.9f}
 };
 
-// second_batch (previously "Kostya's")
+// second_batch
 static const float cal_second_batch[][2] = {
   {0.000f,  0.0f},
   {0.120f, 10.0f},
