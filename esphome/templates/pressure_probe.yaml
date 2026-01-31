@@ -57,23 +57,14 @@ sensor:
         return NAN;
       }
 
-      // Calibration table: voltage (V) -> pressure (PSI)
-      // Tuned for: G1/4 sensor (0-1MPa, 0-5V), 24V input, 20k/10k divider
-      static const float table[][2] = {
-        {0.000, 0.0},
-        {0.120, 10.0},
-        {0.220, 20.0},
-        {0.340, 30.0},
-        {0.450, 40.0},
-        {0.565, 50.0},
-        {0.680, 60.0},
-        {0.800, 70.0},
-        {0.930, 80.0},
-        {1.060, 90.0},
-        {1.160, 99.9}
-      };
+      auto* cal = find_calibration("${calibration_id}");
+      if (!cal) {
+        ESP_LOGE("pressure_${probe_id}", "Unknown calibration table: ${calibration_id}");
+        return NAN;
+      }
 
-      const int TABLE_SIZE = sizeof(table) / sizeof(table[0]);
+      const float (*table)[2] = cal->points;
+      const int TABLE_SIZE = cal->size;
       const float EPSILON = 0.0001;
 
       if (voltage < table[0][0] - EPSILON) return 0.0;
