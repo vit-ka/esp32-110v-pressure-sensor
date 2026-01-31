@@ -143,7 +143,7 @@ A manual hydrostatic pressure tester works well for calibration. The [IRONWALLS 
 
 ## Known Issues
 
-**Boot button wired as boot+reset.** The boot button is wired incorrectly and acts as both boot and reset. To enter boot mode on the ESP32-WROOM, just press the boot button and release — no need to hold it or press reset separately.
+**Boot button wired as boot+reset.** The boot button is wired incorrectly and acts as both boot and reset. To enter boot mode on the ESP32-WROOM, just press the boot button and release, leave the reset button alone.
 
 ## PCB
 
