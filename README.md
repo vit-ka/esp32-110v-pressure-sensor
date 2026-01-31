@@ -141,6 +141,10 @@ A manual hydrostatic pressure tester works well for calibration. The [IRONWALLS 
 6. Add or update a calibration table in `templates/calibration_tables.h` (see "Adding a Calibration Table" above)
 7. Flash the normal config (`example-config.yaml`) and verify readings match the gauge
 
+## Known Issues
+
+**Boot button wired as boot+reset.** The boot button is wired incorrectly and acts as both boot and reset. To enter boot mode on the ESP32-WROOM, just press the boot button and release — no need to hold it or press reset separately.
+
 ## PCB
 
 - Project file: `ProPrj_esp32_pressure_sensor_2026-01-26.epro` (EasyEDA format)
