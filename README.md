@@ -93,14 +93,14 @@ packages:
     vars:
       probe_id: "1"
       probe_pin: GPIO1
-      calibration_id: "first_batch"
+      calibration_id: "12_36v"
 ```
 
 Multiple probes can share the same calibration table.
 
 ## Calibration
 
-Calibration tables are defined in `esphome/templates/calibration_tables.h`. Each table maps ADC voltage readings to PSI using piecewise linear interpolation. Tables are identified by string IDs (e.g., `"first_batch"`, `"second_batch"`).
+Calibration tables are defined in `esphome/templates/calibration_tables.h`. Each table maps ADC voltage readings to PSI using piecewise linear interpolation. Tables are identified by string IDs (e.g., `"12_36v"`, `"second_batch"`).
 
 Current calibrations are tuned for:
 - G1/4 pressure sensor (0-1 MPa / 0-100 PSI, 0-5V output)

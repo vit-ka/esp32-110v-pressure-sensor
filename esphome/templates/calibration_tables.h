@@ -7,8 +7,8 @@ struct CalibrationTable {
   int size;
 };
 
-// first_batch
-static const float cal_first_batch[][2] = {
+// 12_36v
+static const float cal_12_36v[][2] = {
   {0.000f,  0.0f},
   {0.086f, 10.0f},
   {0.244f, 20.0f},
@@ -22,8 +22,8 @@ static const float cal_first_batch[][2] = {
   {1.612f, 99.9f}
 };
 
-// second_batch
-static const float cal_second_batch[][2] = {
+// 5_16v
+static const float cal_5_16v[][2] = {
   {0.000f,  0.0f},
   {0.120f, 10.0f},
   {0.220f, 20.0f},
@@ -38,8 +38,8 @@ static const float cal_second_batch[][2] = {
 };
 
 static const CalibrationTable CALIBRATION_TABLES[] = {
-  {"first_batch",  cal_first_batch,  sizeof(cal_first_batch)  / sizeof(cal_first_batch[0])},
-  {"second_batch", cal_second_batch, sizeof(cal_second_batch) / sizeof(cal_second_batch[0])},
+  {"12_36v",  cal_12_36v,  sizeof(cal_12_36v)  / sizeof(cal_12_36v[0])},
+  {"5_16v", cal_5_16v, sizeof(cal_5_16v) / sizeof(cal_5_16v[0])},
 };
 
 static const int CALIBRATION_TABLE_COUNT = sizeof(CALIBRATION_TABLES) / sizeof(CALIBRATION_TABLES[0]);
