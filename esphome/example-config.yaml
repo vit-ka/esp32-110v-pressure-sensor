@@ -1,6 +1,8 @@
 esphome:
   name: "water-pressure-01"
   friendly_name: "Water Pressure 01"
+  includes:
+    - templates/calibration_tables.h
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -34,8 +36,10 @@ packages:
     vars:
       probe_id: "1"
       probe_pin: GPIO1
+      calibration_id: "first_batch"
   probe2: !include
     file: templates/pressure_probe.yaml
     vars:
       probe_id: "2"
       probe_pin: GPIO3
+      calibration_id: "first_batch"
