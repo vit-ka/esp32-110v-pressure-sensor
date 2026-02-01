@@ -36,7 +36,12 @@ static const float cal_0_10MPa[][2] = {
   {0.800f,  70.0f},
   {0.920f,  80.0f},
   {1.040f,  90.0f},
-  {1.160f, 100.0f}
+  {1.160f, 100.0f},
+  {1.280f, 110.0f},
+  {1.400f, 120.0f},
+  {1.520f, 130.0f},
+  {1.640f, 140.0f},
+  {1.860f, 150.0f}
 };
 
 static const CalibrationTable CALIBRATION_TABLES[] = {
